@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <meta charset="utf-8">
+	<style></style>
+</head>
+<body>
+	<form id="frm_producto" >
+        <h2>INSERTA EMPLEADOS</h2>
+        <label for="txt_id">id</label>
+        <input type="text" id="txt_id" class="w3-input" name="IdEmp" placeholder="Ingrese el id del empleado"><br>
+        <label for="txt_nombre">nombre</label>
+        <input type="text" id="txt_nombre" class="w3-input" name="NombreEmp" placeholder="Ingrese el nombre del empleado"><br>
+        <label for="txt_apellido">apellido</label>
+        <input type="text" id="txt_apellido" class="w3-input" name="ApeEmp" placeholder="Ingrese el apellido del empleado"><br>
+        <label for="txt_domicilio">domicilio</label>
+        <input type="text" id="txt_domicilio" class="w3-input" name="DomEmp" placeholder="Ingrese el domicilio del empleado"><br>
+        <label for="txt_telefono">telefono</label>
+        <input type="text" id="txt_telefono" class="w3-input" name="TelEmp" placeholder="Ingrese el telefono del empleado"><br>
+        <label for="txt_correo">correo</label>
+        <input type="text" id="txt_correo" class="w3-input" name="CoEmp" placeholder="Ingrese el correo del empleado"><br>
+        <label for="txt_ocupacion">ocupacion</label>
+        <input type="text" id="txt_ocupacion" class="w3-input" name="OcuEmp" placeholder="Ingrese la ocupacion del empleado"><br>
+        <label for="txt_edad">edad</label>
+        <input type="text" id="txt_edad" class="w3-input" name="EdadEmp" placeholder="Ingrese la edad del empleado"><br>
+        <input type="submit" id="btn_enviar" value="inserta">
+        <a href="frmactuemp.html" id="btn_insertaemp" value="Ir a Actualizar" >Ir a Actualizar</a>
+        <a href="frmelimiemp.html" id="btn_elimiemp" value="Ir a Eliminar" >Ir a Eliminar</a>
+        <a href="../muestraemp.html" id="btn_muestraemp" value="Ir a Mostrar" >Ir a Mostrar</a>
+		<p id="mip"></p>
+    </form>
+	<script>
+		window.onload=function(){
+			document.getElementById("btn_enviar").onclick = function(event){
+                event.preventDefault();
+                let id=document.getElementById("txt_id").value;
+                let nombre=document.getElementById("txt_nombre").value;
+                let apellido=document.getElementById("txt_apellido").value;
+                let domicilio=document.getElementById("txt_domicilio").value;
+                let telefono=document.getElementById("txt_telefono").value;
+                let correo=document.getElementById("txt_correo").value;
+                let ocupacion=document.getElementById("txt_ocupacion").value;
+                let edad=document.getElementById("txt_edad").value;
+
+                let parametros="?&id="+id+"&nombre="+nombre+"&apellido="+apellido+"&domicilio="+domicilio+"&telefono="+telefono+"&correo="+correo+"&ocupacion="+ocupacion+"&edad="+edad; 
+                let request = new Request('insertaempleados.php'+parametros, 
+                {
+                    method: 'get',
+                    headers: {'Content-Type':'application/x-www-form-urlencoded'}
+                });
+                fetch(request).then(function(returnedValue) {
+                    if(returnedValue.ok){
+                        console.log("operacion correcta");
+                        returnedValue.text().then((txt)=>{
+                            console.log('muestro respuesta: ', txt);
+                            document.write('recibo de regreso: ',txt);
+                        });
+                    }
+                }).catch(function(err) {
+                    console.log(err);
+                });
+            }
+		};
+	</script>
+</body>
+</html>

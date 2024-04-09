@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MuestraEmpleado</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+</head>
+<body>
+    <div class="w3-col l8 w3-padding">
+        <div class="w3-panel w3-cyan w3-padding-16">
+            Datos existentes
+        </div>
+        <table class="w3-table-all">
+            <thead>
+                <tr>
+                    <td>id</td>
+                    <td>nombre</td>
+                    <td>apelido</td>
+                    <td>domicilio</td>
+                    <td>telefono</td>
+                    <td>correo</td>
+                    <td>ocupacion</td>
+                    <td>edad</td>
+                </tr>
+            </thead>
+            <tbody id="tbl_datos">
+            </tbody>
+        </table>
+        <a href="php/frmactuemp.html" id="btn_insertaemp" value="Ir a Actualizar" >Ir a Actualizar</a>
+        <a href="php/frmelimiemp.html" id="btn_elimiemp" value="Ir a Eliminar" >Ir a Eliminar</a>
+        <a href="php/frminsertaemp.html" id="btn_insertaemp" value="Ir a Insertar" >Ir a Insertar</a>
+    </div>
+</body>
+<script>
+    window.onload=function(){
+        fetch('http://localhost/proyecto2/php/leerempleados.php')
+        .then(response=>{
+            if(response.ok){
+                response.json()
+               .then(function (datosjson){
+                console.log(datosjson)
+                    datos=datosjson.slice(0,10)
+                    console.log(datos)
+                    let s="";
+                    datos.forEach(element => {
+                        s+=`
+                            <tr>
+                            <td>${element.id}</td>
+                            <td>${element.nombre}</td>
+                            <td>${element.apellido}</td>
+                            <td>${element.domicilio}</td>
+                            <td>${element.telefono}</td>
+                            <td>${element.correo}</td>
+                            <td>${element.ocupacion}</td>
+                            <td>${element.edad}</td>
+                            </tr>
+                        `;
+                    });
+                    document.querySelector("#tbl_datos").innerHTML=s;
+                });
+            }
+        })
+    }
+</script>
+</html>

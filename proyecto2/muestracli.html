@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MuestraCliente</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+</head>
+<body>
+    <div class="w3-col l8 w3-padding">
+        <div class="w3-panel w3-cyan w3-padding-16">
+            Datos existentes
+        </div>
+        <table class="w3-table-all">
+            <thead>
+                <tr>
+                    <td>id</td>
+                    <td>nombre</td>
+                    <td>apellido</td>
+                    <td>domicilio</td>
+                    <td>edad</td>
+                    <td>rfc</td>
+                    <td>correo</td>
+                </tr>
+            </thead>
+            <tbody id="tbl_datos">
+            </tbody>
+        </table>
+        <a href="php/frmactucli.html" id="btn_insertacli" value="Ir a Actualizar" >Ir a Actualizar</a>
+        <a href="php/frmelimicli.html" id="btn_elimicli" value="Ir a Eliminar" >Ir a Eliminar</a>
+        <a href="php/frminsertacli.html" id="btn_insertacli" value="Ir a Insertar" >Ir a Insertar</a>
+    </div>
+</body>
+<script>
+    window.onload=function(){
+        fetch('http://localhost/proyecto2/php/leerclientes.php')
+        .then(response=>{
+            if(response.ok){
+                response.json()
+               .then(function (datosjson){
+                    datos=datosjson.slice(0,10)
+                    let s="";
+                    datos.forEach(element => {
+                        s+=`
+                            <tr>
+                            <td>${element.id}</td>
+                            <td>${element.nombre}</td>
+                            <td>${element.apellido}</td>
+                            <td>${element.domicilio}</td>
+                            <td>${element.edad}</td>
+                            <td>${element.rfc}</td>
+                            <td>${element.correo}</td>
+                            </tr>
+                        `;
+                    });
+                    document.querySelector("#tbl_datos").innerHTML=s;
+                });
+            }
+        })
+    }
+</script>
+</html>

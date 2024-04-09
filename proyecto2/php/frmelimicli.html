@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <meta charset="utf-8">
+	<style></style>
+</head>
+<body>
+	<form id="frm_producto" >
+        <h2>ELIMINA CLIENTES</h2><label for="txt_id">id</label>
+        <input type="text" id="txt_id"class="w3-input" name="IdCliente" placeholder="Ingrese el id del cliente"><br>
+        <label for="txt_nombre">nombre</label>
+        <input type="text" id="txt_nombre"class="w3-input" name="NombreCliente" placeholder="Ingrese el nombre del cliente"><br>
+        <label for="txt_apellido">apellido</label>
+        <input type="text" id="txt_apellido"class="w3-input" name="ApellidoCliente" placeholder="Ingrese el apellido del cliente"><br>
+        <label for="txt_domicilio">domicilio</label>
+        <input type="text" id="txt_domicilio"class="w3-input" name="DomCliente" placeholder="Ingrese el domicilio del cliente"><br>
+        <label for="txt_edad">edad</label>
+        <input type="text" id="txt_edad"class="w3-input" name="EdadCliente" placeholder="Ingrese la edad del cliente"><br>
+        <label for="txt_rfc">rfc</label>
+        <input type="text" id="txt_rfc"class="w3-input" name="RFCcliente" placeholder="Ingrese el rfc del cliente"><br>
+        <label for="txt_correo">correo</label>
+        <input type="text" id="txt_correo"class="w3-input" name="CorreoCliente" placeholder="Ingrese el correo del cliente"><br>
+
+        <input type="submit" id="btn_enviar" value="Elimina">
+        <a href="frmactucli.html" id="btn_actucli" value="Ir a Actualizar" >Ir a Actualizar</a>
+        <a href="frminsertacli.html" id="btn_insercli" value="Ir a Insertar" >Ir a Insertar</a>
+        <a href="../muestracli.html" id="btn_muestrapro" value="Ir a Mostrar" >Ir a Mostrar</a>
+		<p id="mip"></p>
+    </form>
+	<script>
+		window.onload=function(){
+			document.getElementById("btn_enviar").onclick = function(event){
+                event.preventDefault();
+                let id=document.getElementById("txt_id").value;
+                let nombre=document.getElementById("txt_nombre").value;
+                let apellido=document.getElementById("txt_apellido").value;
+                let domicilio=document.getElementById("txt_domicilio").value;
+                let edad=document.getElementById("txt_edad").value;
+                let rfc=document.getElementById("txt_rfc").value;
+                let correo=document.getElementById("txt_correo").value;
+                
+
+                let parametros="?&id="+id+"&nombre="+nombre+"&apellido="+apellido+"&domicilio="+domicilio+"&edad="+edad+"&rfc="+rfc+"&correo="+correo; 
+                let request = new Request('elimicli.php'+parametros, 
+                {
+                    method: 'get',
+                    headers: {'Content-Type':'application/x-www-form-urlencoded'}
+                });
+                fetch(request).then(function(returnedValue) {
+                    if(returnedValue.ok){
+                        console.log("operacion correcta");
+                        returnedValue.text().then((txt)=>{
+                            console.log('muestro respuesta: ', txt);
+                            document.write('recibo de regreso: ',txt);
+                        });
+                    }
+                }).catch(function(err) {
+                    console.log(err);
+                });
+            }
+		};
+	</script>
+</body>
+</html>

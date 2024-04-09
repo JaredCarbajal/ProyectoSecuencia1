@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <meta charset="utf-8">
+	<style></style>
+
+</head>
+<body>
+	<form id="frm_producto" >
+        <h2>INSERTA PRODUCTOS</h2>
+        <label for="txt_id">id</label>
+        <input type="text" id="txt_id"class="w3-input" name="IdProducto" placeholder="Ingrese el id del producto"><br>
+        <label for="txt_nombre">nombre</label>
+        <input type="text" id="txt_nombre"class="w3-input" name="Nombre" placeholder="Ingrese el nombre del producto"><br>
+        <label for="txt_tipo">tipo</label>
+        <input type="text" id="txt_tipo"class="w3-input" name="Tipo" placeholder="Ingrese el tipo de producto"><br>
+        <label for="txt_stock">stock</label>
+        <input type="text" id="txt_stock"class="w3-input" name="Stock" placeholder="Ingrese el stock actual del producto"><br>
+        <label for="txt_stockmax">stockmax</label>
+        <input type="text" id="txt_stockmax" class="w3-input" name="Stockmax" placeholder="Ingrese el stock max del producto"><br>
+        <input type="submit" id="btn_enviar" value="inserta">
+        <a href="frminsertacli.html" id="btn_ir_otro_formulario">Ir a Otro Formulario</a>
+
+		<p id="mip"></p>
+    </form>
+	<script>
+		window.onload=function(){
+			document.getElementById("btn_enviar").onclick = function(event){
+                event.preventDefault();
+                let id=document.getElementById("txt_id").value;
+                let nombre=document.getElementById("txt_nombre").value;
+                let tipo=document.getElementById("txt_tipo").value;
+                let stock=document.getElementById("txt_stock").value;
+                let stockmax=document.getElementById("txt_stockmax").value;
+                let parametros="?&id="+id+"&nombre="+nombre+"&tipo="+tipo+"&stock="+stock+"&stockmax="+stockmax; 
+                let request = new Request('insertaproductos.php'+parametros, 
+                {
+                    method: 'get',
+                    headers: {'Content-Type':'application/x-www-form-urlencoded'}
+                });
+                fetch(request).then(function(returnedValue) {
+                    if(returnedValue.ok){
+                        console.log("operacion correcta");
+                        returnedValue.text().then((txt)=>{
+                            console.log('muestro respuesta: ', txt);
+                            document.write('recibo de regreso: ',txt);
+                        });
+                    }
+                }).catch(function(err) {
+                    console.log(err);
+                });
+            }
+		};
+	</script>
+</body>
+</html>
